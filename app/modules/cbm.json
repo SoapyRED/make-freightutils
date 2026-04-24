@@ -1,0 +1,35 @@
+{
+  "name": "cbm",
+  "label": "Calculate CBM",
+  "description": "Calculate cubic metres from item dimensions.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/cbm",
+    "method": "GET",
+    "qs": {
+      "l": "{{parameters.l}}",
+      "w": "{{parameters.w}}",
+      "h": "{{parameters.h}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    { "name": "l", "label": "Length (cm)", "type": "number", "required": true, "default": 120 },
+    { "name": "w", "label": "Width (cm)", "type": "number", "required": true, "default": 80 },
+    { "name": "h", "label": "Height (cm)", "type": "number", "required": true, "default": 100 }
+  ],
+  "interface": [
+    { "name": "total_cbm", "label": "Total CBM", "type": "number" },
+    { "name": "cubic_feet", "label": "Cubic Feet", "type": "number" },
+    { "name": "revenue_tonnes", "label": "Revenue Tonnes", "type": "number" }
+  ],
+  "samples": {
+    "length_cm": 120,
+    "width_cm": 80,
+    "height_cm": 100,
+    "total_cbm": 0.96,
+    "cubic_feet": 33.9,
+    "revenue_tonnes": 1
+  }
+}

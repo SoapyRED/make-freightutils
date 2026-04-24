@@ -1,0 +1,35 @@
+{
+  "name": "airlineLookup",
+  "label": "Find Airline",
+  "description": "Look up an airline by 3-digit AWB prefix (6,352 entries, 390 cargo carriers).",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/airlines",
+    "method": "GET",
+    "qs": { "prefix": "{{parameters.prefix}}" },
+    "response": {
+      "iterate": "{{body.results}}",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    { "name": "prefix", "label": "AWB Prefix", "type": "text", "required": true, "default": "176", "help": "3-digit IATA AWB prefix, e.g. 176 for Emirates SkyCargo" }
+  ],
+  "interface": [
+    { "name": "airline_name", "label": "Airline Name", "type": "text" },
+    { "name": "iata", "label": "IATA Code", "type": "text" },
+    { "name": "icao", "label": "ICAO Code", "type": "text" },
+    { "name": "awb_prefix", "label": "AWB Prefix", "type": "text" },
+    { "name": "country", "label": "Country", "type": "text" },
+    { "name": "cargo", "label": "Cargo Carrier", "type": "boolean" }
+  ],
+  "samples": {
+    "airline_name": "Emirates SkyCargo",
+    "iata": "EK",
+    "icao": "UAE",
+    "awb_prefix": "176",
+    "country": "United Arab Emirates",
+    "cargo": true
+  }
+}

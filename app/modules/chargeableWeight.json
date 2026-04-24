@@ -1,0 +1,38 @@
+{
+  "name": "chargeableWeight",
+  "label": "Calculate Chargeable Weight",
+  "description": "Air or sea chargeable weight from dimensions + gross weight.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/chargeable-weight",
+    "method": "GET",
+    "qs": {
+      "l": "{{parameters.l}}",
+      "w": "{{parameters.w}}",
+      "h": "{{parameters.h}}",
+      "gw": "{{parameters.gw}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    { "name": "l", "label": "Length (cm)", "type": "number", "required": true, "default": 120 },
+    { "name": "w", "label": "Width (cm)", "type": "number", "required": true, "default": 80 },
+    { "name": "h", "label": "Height (cm)", "type": "number", "required": true, "default": 100 },
+    { "name": "gw", "label": "Gross Weight (kg)", "type": "number", "required": true, "default": 500 }
+  ],
+  "interface": [
+    { "name": "chargeable_weight_kg", "label": "Chargeable Weight (kg)", "type": "number" },
+    { "name": "volumetric_weight_kg", "label": "Volumetric Weight (kg)", "type": "number" },
+    { "name": "billing_basis", "label": "Billing Basis", "type": "text" }
+  ],
+  "samples": {
+    "length_cm": 120,
+    "width_cm": 80,
+    "height_cm": 100,
+    "gross_weight_kg": 500,
+    "volumetric_weight_kg": 160,
+    "chargeable_weight_kg": 500,
+    "billing_basis": "actual"
+  }
+}

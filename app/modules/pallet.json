@@ -1,0 +1,40 @@
+{
+  "name": "pallet",
+  "label": "Calculate Pallet Fitting",
+  "description": "How many boxes of a given size fit on a pallet.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/pallet",
+    "method": "GET",
+    "qs": {
+      "pl": "{{parameters.pl}}",
+      "pw": "{{parameters.pw}}",
+      "pmh": "{{parameters.pmh}}",
+      "bl": "{{parameters.bl}}",
+      "bw": "{{parameters.bw}}",
+      "bh": "{{parameters.bh}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    { "name": "pl", "label": "Pallet Length (cm)", "type": "number", "required": true, "default": 120 },
+    { "name": "pw", "label": "Pallet Width (cm)", "type": "number", "required": true, "default": 80 },
+    { "name": "pmh", "label": "Pallet Max Height (cm)", "type": "number", "required": true, "default": 220 },
+    { "name": "bl", "label": "Box Length (cm)", "type": "number", "required": true, "default": 40 },
+    { "name": "bw", "label": "Box Width (cm)", "type": "number", "required": true, "default": 30 },
+    { "name": "bh", "label": "Box Height (cm)", "type": "number", "required": true, "default": 25 }
+  ],
+  "interface": [
+    { "name": "total_boxes", "label": "Total Boxes", "type": "number" },
+    { "name": "layers", "label": "Layers", "type": "number" },
+    { "name": "boxes_per_layer", "label": "Boxes per Layer", "type": "number" },
+    { "name": "limitingFactor", "label": "Limiting Factor", "type": "text" }
+  ],
+  "samples": {
+    "total_boxes": 64,
+    "layers": 4,
+    "boxes_per_layer": 16,
+    "limitingFactor": "height"
+  }
+}

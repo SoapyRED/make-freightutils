@@ -1,0 +1,35 @@
+{
+  "name": "adrLookup",
+  "label": "Find ADR Entry",
+  "description": "Look up an ADR 2025 dangerous-goods entry by UN number.",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/adr",
+    "method": "GET",
+    "qs": { "un": "{{parameters.un}}" },
+    "response": {
+      "iterate": "{{body.results}}",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    { "name": "un", "label": "UN Number", "type": "text", "required": true, "default": "1203", "help": "1–4 digit UN number, e.g. 1203 for petrol" }
+  ],
+  "interface": [
+    { "name": "un_number", "label": "UN Number", "type": "text" },
+    { "name": "proper_shipping_name", "label": "Proper Shipping Name", "type": "text" },
+    { "name": "class", "label": "Class", "type": "text" },
+    { "name": "packing_group", "label": "Packing Group", "type": "text" },
+    { "name": "transport_category", "label": "Transport Category", "type": "number" },
+    { "name": "tunnel_code", "label": "Tunnel Code", "type": "text" }
+  ],
+  "samples": {
+    "un_number": "1203",
+    "proper_shipping_name": "MOTOR SPIRIT or GASOLINE or PETROL",
+    "class": "3",
+    "packing_group": "II",
+    "transport_category": 2,
+    "tunnel_code": "D/E"
+  }
+}

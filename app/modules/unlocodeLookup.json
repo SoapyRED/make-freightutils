@@ -1,0 +1,33 @@
+{
+  "name": "unlocodeLookup",
+  "label": "Find UN or LOCODE Location",
+  "description": "Search UNECE UN/LOCODE 2024-2 (116,000+ transport locations).",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/unlocode",
+    "method": "GET",
+    "qs": { "q": "{{parameters.q}}" },
+    "response": {
+      "iterate": "{{body.results}}",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    { "name": "q", "label": "Search Query", "type": "text", "required": true, "default": "rotterdam", "help": "Location name, partial code, or country subdivision" }
+  ],
+  "interface": [
+    { "name": "locode", "label": "LOCODE", "type": "text" },
+    { "name": "name", "label": "Location Name", "type": "text" },
+    { "name": "country", "label": "Country (ISO Alpha-2)", "type": "text" },
+    { "name": "subdivision", "label": "Subdivision", "type": "text" },
+    { "name": "function", "label": "Function", "type": "text" }
+  ],
+  "samples": {
+    "locode": "NLRTM",
+    "name": "Rotterdam",
+    "country": "NL",
+    "subdivision": "ZH",
+    "function": "port"
+  }
+}

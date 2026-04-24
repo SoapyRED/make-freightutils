@@ -1,0 +1,51 @@
+{
+  "name": "unitConvert",
+  "label": "Convert Units",
+  "description": "Convert between freight units (kg↔lbs, m↔ft, m3↔ft3, L↔gal).",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/convert",
+    "method": "GET",
+    "qs": {
+      "value": "{{parameters.value}}",
+      "from": "{{parameters.from}}",
+      "to": "{{parameters.to}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    { "name": "value", "label": "Value", "type": "number", "required": true, "default": 100 },
+    {
+      "name": "from",
+      "label": "From Unit",
+      "type": "text",
+      "required": true,
+      "default": "kg",
+      "help": "Unit code: kg, lbs, g, oz, m, ft, cm, in, m3, ft3, l, gal-us, gal-uk"
+    },
+    {
+      "name": "to",
+      "label": "To Unit",
+      "type": "text",
+      "required": true,
+      "default": "lbs",
+      "help": "Target unit — must be the same dimension as From (mass, length, volume)"
+    }
+  ],
+  "interface": [
+    {
+      "name": "result",
+      "label": "Result",
+      "type": "collection",
+      "spec": [
+        { "name": "value", "label": "Converted Value", "type": "number" },
+        { "name": "unit", "label": "Target Unit", "type": "text" }
+      ]
+    }
+  ],
+  "samples": {
+    "from": { "value": 100, "unit": "kg" },
+    "result": { "value": 220.46, "unit": "lbs" }
+  }
+}

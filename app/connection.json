@@ -1,0 +1,31 @@
+{
+  "name": "apiKey",
+  "type": "basic",
+  "label": "FreightUtils API Key",
+  "parameters": [
+    {
+      "name": "apiKey",
+      "label": "API Key",
+      "type": "password",
+      "required": true,
+      "help": "Generate a free key (100 req/day) at https://www.freightutils.com/api-docs. Upgrade to Pro (50,000 req/month, £19) at https://www.freightutils.com/pricing."
+    }
+  ],
+  "api": {
+    "url": "/health",
+    "method": "GET",
+    "headers": {
+      "X-API-Key": "{{parameters.apiKey}}",
+      "Accept": "application/json"
+    },
+    "response": {
+      "uid": "{{substring(parameters.apiKey; 0; 8)}}",
+      "error": {
+        "message": "[{{statusCode}}] Invalid API key. Check the value or generate a new one at https://www.freightutils.com/api-docs."
+      }
+    },
+    "log": {
+      "sanitize": ["request.headers.X-API-Key"]
+    }
+  }
+}

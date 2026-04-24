@@ -1,0 +1,49 @@
+{
+  "name": "vehicleLookup",
+  "label": "Find Road-Freight Vehicle",
+  "description": "Look up a road-freight vehicle or trailer type.",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/vehicles",
+    "method": "GET",
+    "qs": { "category": "{{parameters.category}}" },
+    "response": {
+      "iterate": "{{body.results}}",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    {
+      "name": "category",
+      "label": "Category",
+      "type": "select",
+      "required": true,
+      "default": "van",
+      "options": [
+        { "label": "Van", "value": "van" },
+        { "label": "Rigid", "value": "rigid" },
+        { "label": "Articulated", "value": "articulated" },
+        { "label": "Trailer", "value": "trailer" }
+      ]
+    }
+  ],
+  "interface": [
+    { "name": "slug", "label": "Slug", "type": "text" },
+    { "name": "name", "label": "Name", "type": "text" },
+    { "name": "category", "label": "Category", "type": "text" },
+    { "name": "length_m", "label": "Length (m)", "type": "number" },
+    { "name": "max_payload_kg", "label": "Max Payload (kg)", "type": "number" },
+    { "name": "pallet_capacity_euro", "label": "Euro Pallet Capacity", "type": "number" }
+  ],
+  "samples": {
+    "slug": "standard-curtainsider",
+    "name": "Standard Curtainsider",
+    "category": "articulated",
+    "length_m": 13.6,
+    "width_m": 2.45,
+    "height_m": 2.7,
+    "max_payload_kg": 24000,
+    "pallet_capacity_euro": 33
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "ldm",
+  "label": "Calculate LDM",
+  "description": "Calculate loading metres from a pallet preset and quantity.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/ldm",
+    "method": "GET",
+    "qs": {
+      "pallet": "{{parameters.pallet}}",
+      "qty": "{{parameters.qty}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    {
+      "name": "pallet",
+      "label": "Pallet Type",
+      "type": "select",
+      "required": true,
+      "default": "euro",
+      "options": [
+        { "label": "Euro (1200×800)", "value": "euro" },
+        { "label": "UK Standard (1200×1000)", "value": "uk-standard" },
+        { "label": "Half Pallet (800×600)", "value": "half" },
+        { "label": "Quarter Pallet (600×400)", "value": "quarter" }
+      ]
+    },
+    { "name": "qty", "label": "Quantity", "type": "uinteger", "required": true, "default": 10 }
+  ],
+  "interface": [
+    { "name": "ldm", "label": "LDM", "type": "number" },
+    { "name": "pallet_type", "label": "Pallet Type", "type": "text" },
+    { "name": "quantity", "label": "Quantity", "type": "number" }
+  ],
+  "samples": {
+    "ldm": 4,
+    "pallet_type": "euro",
+    "quantity": 10,
+    "trailer_width_m": 2.4
+  }
+}

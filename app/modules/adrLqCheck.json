@@ -1,0 +1,67 @@
+{
+  "name": "adrLqCheck",
+  "label": "Check ADR LQ or EQ Eligibility",
+  "description": "Limited Quantity / Excepted Quantity eligibility for a single ADR substance.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/adr/lq-check",
+    "method": "POST",
+    "body": {
+      "mode": "{{parameters.mode}}",
+      "items": [
+        {
+          "un_number": "{{parameters.un_number}}",
+          "quantity": "{{parameters.quantity}}",
+          "unit": "{{parameters.unit}}"
+        }
+      ]
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "select",
+      "required": true,
+      "default": "lq",
+      "options": [
+        { "label": "Limited Quantity (LQ)", "value": "lq" },
+        { "label": "Excepted Quantity (EQ)", "value": "eq" }
+      ]
+    },
+    { "name": "un_number", "label": "UN Number", "type": "text", "required": true, "default": "1203" },
+    { "name": "quantity", "label": "Quantity", "type": "number", "required": true, "default": 0.5 },
+    {
+      "name": "unit",
+      "label": "Unit",
+      "type": "select",
+      "required": true,
+      "default": "L",
+      "options": [
+        { "label": "Litres (L)", "value": "L" },
+        { "label": "Kilograms (kg)", "value": "kg" }
+      ]
+    }
+  ],
+  "interface": [
+    { "name": "overall_status", "label": "Overall Status", "type": "text" },
+    {
+      "name": "items",
+      "label": "Items",
+      "type": "array",
+      "spec": [
+        { "name": "un_number", "label": "UN Number", "type": "text" },
+        { "name": "status", "label": "Status", "type": "text" },
+        { "name": "lq_limit", "label": "LQ/EQ Limit", "type": "number" }
+      ]
+    }
+  ],
+  "samples": {
+    "overall_status": "qualifies",
+    "items": [
+      { "un_number": "1203", "quantity": 0.5, "unit": "L", "status": "qualifies", "lq_limit": 1 }
+    ]
+  }
+}

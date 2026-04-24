@@ -1,0 +1,66 @@
+{
+  "name": "consignment",
+  "label": "Calculate Consignment",
+  "description": "Totals (CBM, weight, LDM, chargeable weight) for a single-line consignment.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/consignment",
+    "method": "POST",
+    "body": {
+      "mode": "{{parameters.mode}}",
+      "items": [
+        {
+          "length": "{{parameters.length}}",
+          "width": "{{parameters.width}}",
+          "height": "{{parameters.height}}",
+          "grossWeight": "{{parameters.grossWeight}}",
+          "quantity": "{{parameters.quantity}}"
+        }
+      ]
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "select",
+      "required": true,
+      "default": "air",
+      "options": [
+        { "label": "Air", "value": "air" },
+        { "label": "Road", "value": "road" },
+        { "label": "Sea", "value": "sea" }
+      ]
+    },
+    { "name": "length", "label": "Length (cm)", "type": "number", "required": true, "default": 60 },
+    { "name": "width", "label": "Width (cm)", "type": "number", "required": true, "default": 40 },
+    { "name": "height", "label": "Height (cm)", "type": "number", "required": true, "default": 30 },
+    { "name": "grossWeight", "label": "Gross Weight (kg)", "type": "number", "required": true, "default": 25 },
+    { "name": "quantity", "label": "Quantity", "type": "uinteger", "required": true, "default": 2 }
+  ],
+  "interface": [
+    { "name": "mode", "label": "Mode", "type": "text" },
+    {
+      "name": "totals",
+      "label": "Totals",
+      "type": "collection",
+      "spec": [
+        { "name": "cbm", "label": "Total CBM", "type": "number" },
+        { "name": "weight_kg", "label": "Total Weight (kg)", "type": "number" },
+        { "name": "ldm", "label": "Total LDM", "type": "number" },
+        { "name": "chargeable_weight_kg", "label": "Total Chargeable Weight (kg)", "type": "number" }
+      ]
+    }
+  ],
+  "samples": {
+    "mode": "air",
+    "totals": {
+      "cbm": 0.144,
+      "weight_kg": 50,
+      "ldm": 0.1,
+      "chargeable_weight_kg": 50
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "adrExemption",
+  "label": "Calculate ADR 1.1.3.6 Exemption",
+  "description": "Transport-category points against the 1000-point small-load threshold.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/adr-calculator",
+    "method": "GET",
+    "qs": {
+      "un": "{{parameters.un}}",
+      "qty": "{{parameters.qty}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    { "name": "un", "label": "UN Number", "type": "text", "required": true, "default": "1203", "help": "1–4 digit UN number" },
+    { "name": "qty", "label": "Quantity (kg or L)", "type": "number", "required": true, "default": 200 }
+  ],
+  "interface": [
+    { "name": "total_points", "label": "Total Points", "type": "number" },
+    { "name": "exempt", "label": "Exempt Under 1.1.3.6", "type": "boolean" },
+    { "name": "transport_category", "label": "Transport Category", "type": "number" },
+    { "name": "multiplier", "label": "Multiplier", "type": "number" },
+    { "name": "threshold", "label": "Threshold", "type": "number" }
+  ],
+  "samples": {
+    "un_number": "1203",
+    "quantity": 200,
+    "transport_category": 2,
+    "multiplier": 3,
+    "total_points": 600,
+    "exempt": true,
+    "threshold": 1000
+  }
+}

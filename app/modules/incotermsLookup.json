@@ -1,0 +1,53 @@
+{
+  "name": "incotermsLookup",
+  "label": "Find Incoterm",
+  "description": "Look up an INCOTERMS 2020 definition by 3-letter code.",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/incoterms",
+    "method": "GET",
+    "qs": { "code": "{{parameters.code}}" },
+    "response": {
+      "iterate": "[{{body}}]",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    {
+      "name": "code",
+      "label": "Incoterm Code",
+      "type": "select",
+      "required": true,
+      "default": "FOB",
+      "options": [
+        { "label": "EXW — Ex Works", "value": "EXW" },
+        { "label": "FCA — Free Carrier", "value": "FCA" },
+        { "label": "CPT — Carriage Paid To", "value": "CPT" },
+        { "label": "CIP — Carriage and Insurance Paid To", "value": "CIP" },
+        { "label": "DAP — Delivered at Place", "value": "DAP" },
+        { "label": "DPU — Delivered at Place Unloaded", "value": "DPU" },
+        { "label": "DDP — Delivered Duty Paid", "value": "DDP" },
+        { "label": "FAS — Free Alongside Ship", "value": "FAS" },
+        { "label": "FOB — Free on Board", "value": "FOB" },
+        { "label": "CFR — Cost and Freight", "value": "CFR" },
+        { "label": "CIF — Cost, Insurance, Freight", "value": "CIF" }
+      ]
+    }
+  ],
+  "interface": [
+    { "name": "code", "label": "Code", "type": "text" },
+    { "name": "name", "label": "Name", "type": "text" },
+    { "name": "mode", "label": "Transport Mode", "type": "text" },
+    { "name": "risk_transfer", "label": "Risk Transfer", "type": "text" },
+    { "name": "cost_transfer", "label": "Cost Transfer", "type": "text" }
+  ],
+  "samples": {
+    "code": "FOB",
+    "name": "Free on Board",
+    "mode": "sea",
+    "risk_transfer": "When goods cross ship rail at port of shipment",
+    "cost_transfer": "At port of shipment",
+    "insurance": "Buyer"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "hsLookup",
+  "label": "Find HS Code",
+  "description": "Search WCO HS 2022 codes by free-text product description.",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/hs",
+    "method": "GET",
+    "qs": { "q": "{{parameters.q}}" },
+    "response": {
+      "iterate": "{{body.results}}",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    { "name": "q", "label": "Search Query", "type": "text", "required": true, "default": "coffee", "help": "Product name, material, or partial code" }
+  ],
+  "interface": [
+    { "name": "commodity_code", "label": "Commodity Code", "type": "text" },
+    { "name": "description", "label": "Description", "type": "text" },
+    { "name": "section", "label": "Section", "type": "text" },
+    { "name": "chapter", "label": "Chapter", "type": "text" },
+    { "name": "heading", "label": "Heading", "type": "text" }
+  ],
+  "samples": {
+    "commodity_code": "0901110000",
+    "description": "Coffee, not roasted, not decaffeinated",
+    "section": "IV",
+    "chapter": "09",
+    "heading": "0901"
+  }
+}

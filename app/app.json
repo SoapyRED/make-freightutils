@@ -1,0 +1,25 @@
+{
+  "name": "freightutils",
+  "label": "FreightUtils",
+  "description": "Free freight tools API — CBM, LDM, chargeable weight, dangerous goods, HS codes, customs, reference data.",
+  "theme": "#EF9F27",
+  "language": "en",
+  "private": true,
+  "audience": "global",
+  "countries": ["gb", "eu"],
+  "base": {
+    "baseUrl": "https://www.freightutils.com/api",
+    "headers": {
+      "X-API-Key": "{{connection.apiKey}}",
+      "Accept": "application/json"
+    },
+    "response": {
+      "error": {
+        "message": "[{{statusCode}}] {{body.error || body.message || 'Unknown error'}}"
+      }
+    },
+    "log": {
+      "sanitize": ["request.headers.X-API-Key"]
+    }
+  }
+}

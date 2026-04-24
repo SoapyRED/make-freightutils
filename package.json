@@ -1,0 +1,40 @@
+{
+  "name": "make-freightutils",
+  "version": "0.1.0",
+  "description": "Make.com custom app for FreightUtils — free freight tools API (CBM, LDM, chargeable weight, ADR, HS, customs, reference data).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "push": "node scripts/push.mjs"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Marius Cristoiu",
+    "email": "contact@freightutils.com",
+    "url": "https://www.freightutils.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoapyRED/make-freightutils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SoapyRED/make-freightutils/issues"
+  },
+  "homepage": "https://www.freightutils.com",
+  "keywords": [
+    "make",
+    "make-com",
+    "integromat",
+    "freight",
+    "logistics",
+    "shipping",
+    "dangerous-goods",
+    "customs"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@makehq/cli": "^1.4.0"
+  }
+}

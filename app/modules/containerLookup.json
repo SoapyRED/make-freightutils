@@ -1,0 +1,36 @@
+{
+  "name": "containerLookup",
+  "label": "Find Sea-Freight Container",
+  "description": "Look up ISO container dimensions and capacity by slug.",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/containers",
+    "method": "GET",
+    "qs": { "type": "{{parameters.type}}" },
+    "response": {
+      "iterate": "[{{body}}]",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    { "name": "type", "label": "Container Type", "type": "text", "required": true, "default": "40ft-high-cube", "help": "Slug, e.g. 20ft-standard, 40ft-standard, 40ft-high-cube, 20ft-reefer" }
+  ],
+  "interface": [
+    { "name": "slug", "label": "Slug", "type": "text" },
+    { "name": "name", "label": "Name", "type": "text" },
+    { "name": "internalVolumeM3", "label": "Internal Volume (m³)", "type": "number" },
+    { "name": "maxGrossKg", "label": "Max Gross Weight (kg)", "type": "number" },
+    { "name": "tareWeightKg", "label": "Tare Weight (kg)", "type": "number" }
+  ],
+  "samples": {
+    "slug": "40ft-high-cube",
+    "name": "40ft High Cube Container",
+    "internalLengthCm": 1203,
+    "internalWidthCm": 235,
+    "internalHeightCm": 269,
+    "internalVolumeM3": 76.2,
+    "maxGrossKg": 32500,
+    "tareWeightKg": 3940
+  }
+}
