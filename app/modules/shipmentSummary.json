@@ -1,0 +1,169 @@
+{
+  "name": "shipmentSummary",
+  "label": "Calculate Shipment Summary",
+  "description": "Composite calculation: CBM, chargeable weight, LDM, customs estimate, and DG flags for an entire shipment in one step. Mirrors Zapier v0.3.0 shipmentSummary.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/shipment/summary",
+    "method": "POST",
+    "body": {
+      "mode": "{{parameters.mode}}",
+      "items": "{{parameters.items}}",
+      "origin": "{{if(parameters.origin_country; {country: parameters.origin_country}; null)}}",
+      "destination": "{{if(parameters.destination_country; {country: parameters.destination_country}; null)}}",
+      "incoterm": "{{parameters.incoterm}}",
+      "freight_cost": "{{parameters.freight_cost}}",
+      "insurance_cost": "{{parameters.insurance_cost}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    {
+      "name": "mode",
+      "label": "Transport Mode",
+      "type": "select",
+      "required": true,
+      "default": "road",
+      "options": [
+        { "label": "Road", "value": "road" },
+        { "label": "Air", "value": "air" },
+        { "label": "Sea", "value": "sea" },
+        { "label": "Multimodal", "value": "multimodal" }
+      ],
+      "help": "Drives the chargeable-weight basis (1750 kg/LDM road · 167 kg/CBM air · 1000 kg/CBM sea)."
+    },
+    {
+      "name": "items",
+      "label": "Items",
+      "type": "array",
+      "required": true,
+      "help": "Add one entry per line item. Each item needs at minimum length, width, height, weight, and quantity.",
+      "spec": [
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "length", "label": "Length (cm)", "type": "number", "required": true, "default": 120 },
+        { "name": "width", "label": "Width (cm)", "type": "number", "required": true, "default": 80 },
+        { "name": "height", "label": "Height (cm)", "type": "number", "required": true, "default": 100 },
+        { "name": "weight", "label": "Gross Weight (kg per item)", "type": "number", "required": true, "default": 250 },
+        { "name": "quantity", "label": "Quantity", "type": "uinteger", "required": true, "default": 1 },
+        { "name": "stackable", "label": "Stackable", "type": "boolean", "help": "Default true if omitted. Affects pallet-fitting calculation." },
+        {
+          "name": "pallet_type",
+          "label": "Pallet Type",
+          "type": "select",
+          "options": [
+            { "label": "Euro (1200×800)", "value": "euro" },
+            { "label": "UK (1200×1000)", "value": "uk" },
+            { "label": "US (1219×1016)", "value": "us" },
+            { "label": "Custom", "value": "custom" },
+            { "label": "None", "value": "none" }
+          ],
+          "help": "Optional. Use 'none' for non-pallet items."
+        },
+        { "name": "hs_code", "label": "HS Code", "type": "text", "help": "6–10 digit HS / commodity code. Required for UK-duty estimate to populate." },
+        { "name": "un_number", "label": "UN Number", "type": "text", "help": "Optional ADR UN number per item (e.g. 1203). Triggers DG compliance flags in the response." },
+        { "name": "customs_value", "label": "Customs Value (GBP per item)", "type": "number", "help": "Optional. Goods value per item in GBP. Used in CIF calculation when an HS code is present." }
+      ]
+    },
+    { "name": "origin_country", "label": "Origin Country (ISO-2)", "type": "text", "help": "Two-letter country code, e.g. GB, CN, DE." },
+    { "name": "destination_country", "label": "Destination Country (ISO-2)", "type": "text", "help": "Two-letter country code, e.g. GB, US, FR." },
+    { "name": "incoterm", "label": "Incoterm", "type": "text", "help": "Optional Incoterms 2020 three-letter code (FOB / CIF / EXW / DAP / DDP / etc.)." },
+    { "name": "freight_cost", "label": "Freight Cost (GBP)", "type": "number", "help": "Optional. Used in UK-duty CIF calculation." },
+    { "name": "insurance_cost", "label": "Insurance Cost (GBP)", "type": "number", "help": "Optional. Used in UK-duty CIF calculation." }
+  ],
+  "interface": [
+    { "name": "mode", "label": "Mode", "type": "text" },
+    { "name": "itemCount", "label": "Item Count", "type": "uinteger" },
+    {
+      "name": "totals",
+      "label": "Totals",
+      "type": "collection",
+      "spec": [
+        { "name": "pieces", "label": "Total Pieces", "type": "uinteger" },
+        { "name": "grossWeight", "label": "Total Gross Weight (kg)", "type": "number" },
+        { "name": "volumeCBM", "label": "Total Volume (CBM)", "type": "number" },
+        { "name": "chargeableWeight", "label": "Chargeable Weight (kg)", "type": "number" },
+        { "name": "billingBasis", "label": "Billing Basis", "type": "text" }
+      ]
+    },
+    {
+      "name": "modeSpecific",
+      "label": "Mode-Specific",
+      "type": "collection",
+      "spec": [
+        { "name": "loadingMetres", "label": "Loading Metres (road)", "type": "number" },
+        { "name": "palletSpaces", "label": "Pallet Spaces (road)", "type": "uinteger" },
+        { "name": "trailerUtilisation", "label": "Trailer Utilisation % (road)", "type": "number" },
+        { "name": "suggestedVehicle", "label": "Suggested Vehicle (road)", "type": "text" },
+        { "name": "chargeableWeightRoad", "label": "Chargeable Weight — Road (kg)", "type": "number" },
+        { "name": "volumetricWeight", "label": "Volumetric Weight (air, kg)", "type": "number" },
+        { "name": "chargeableWeightAir", "label": "Chargeable Weight — Air (kg)", "type": "number" },
+        { "name": "revenueTonnes", "label": "Revenue Tonnes (sea)", "type": "number" },
+        { "name": "suggestedContainer", "label": "Suggested Container (sea)", "type": "text" },
+        { "name": "containerCount", "label": "Container Count (sea)", "type": "uinteger" },
+        { "name": "chargeableWeightSea", "label": "Chargeable Weight — Sea (kg)", "type": "number" }
+      ]
+    },
+    {
+      "name": "compliance",
+      "label": "Compliance",
+      "type": "collection",
+      "spec": [
+        { "name": "hasDangerousGoods", "label": "Has Dangerous Goods", "type": "boolean" },
+        {
+          "name": "adrFlags",
+          "label": "ADR Flags",
+          "type": "collection",
+          "spec": [
+            { "name": "unNumbers", "label": "UN Numbers", "type": "array", "spec": { "type": "text" } },
+            { "name": "totalPoints", "label": "Total Points", "type": "number" },
+            { "name": "exemptionApplicable", "label": "1.1.3.6 Exemption Applicable", "type": "boolean" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "customs",
+      "label": "Customs",
+      "type": "collection",
+      "spec": [
+        { "name": "hsCodesPresent", "label": "HS Codes Present", "type": "boolean" },
+        { "name": "canEstimateUkDuty", "label": "Can Estimate UK Duty", "type": "boolean" }
+      ]
+    },
+    { "name": "warnings", "label": "Warnings", "type": "array", "spec": { "type": "text" } },
+    { "name": "disclaimer", "label": "Disclaimer", "type": "text" }
+  ],
+  "samples": {
+    "mode": "road",
+    "itemCount": 2,
+    "totals": {
+      "pieces": 5,
+      "grossWeight": 1025,
+      "volumeCBM": 3.91,
+      "chargeableWeight": 1575,
+      "billingBasis": "volume"
+    },
+    "modeSpecific": {
+      "loadingMetres": 0.9,
+      "palletSpaces": 2,
+      "trailerUtilisation": 6.62,
+      "suggestedVehicle": "3.5t Luton Van",
+      "chargeableWeightRoad": 1575
+    },
+    "compliance": {
+      "hasDangerousGoods": true,
+      "adrFlags": {
+        "unNumbers": ["1203"],
+        "totalPoints": 75,
+        "exemptionApplicable": true
+      }
+    },
+    "customs": {
+      "hsCodesPresent": true,
+      "canEstimateUkDuty": false
+    },
+    "warnings": ["Dangerous goods detected — verify ADR compliance before transport"],
+    "disclaimer": "Estimate only. Verify with your carrier, customs broker, or freight forwarder."
+  }
+}

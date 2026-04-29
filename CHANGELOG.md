@@ -1,0 +1,42 @@
+# Changelog
+
+## [0.2.0] — 2026-04-29
+
+### Added
+
+- **`shipmentSummary` module** — composite Action that wraps `POST /api/shipment/summary`, the FreightUtils endpoint chaining CBM + chargeable weight + LDM + ADR compliance + UK-duty estimation into a single call. One Make scenario step replaces what previously required 4–5 chained module calls.
+  - Per-item line items via Make's `type: "array"` parameter with typed `spec` — `length`, `width`, `height`, `weight`, `quantity`, `description`, `stackable`, `pallet_type`, `hs_code`, `un_number`, `customs_value`. Users add as many entries as needed in the scenario builder.
+  - Top-level shipment fields: `mode` (road / air / sea / multimodal), `origin_country`, `destination_country`, `incoterm`, `freight_cost`, `insurance_cost`.
+  - Input field keys are `snake_case`, matching the canonical FreightUtils REST API and the Zapier v0.3.0 sibling. (Existing 17 modules still use `camelCase` parameter names from the v0.1.0 release; this divergence is intentional — `shipmentSummary` is the first module authored after the FreightUtils-side snake_case migration.)
+  - Output interface mirrors the live response verbatim — `mode`, `itemCount`, `totals.{pieces,grossWeight,volumeCBM,chargeableWeight,billingBasis}`, `modeSpecific.*` (mode-dependent), `compliance.{hasDangerousGoods,adrFlags.{unNumbers,totalPoints,exemptionApplicable}}`, `customs.{hsCodesPresent,canEstimateUkDuty}`, plus `warnings[]` and `disclaimer`.
+  - Sample data captured from a live `POST /api/shipment/summary` invocation (2-item road shipment with one DG/UN 1203 item) — same payload used in the Zapier v0.3.0 release for sample parity.
+
+### Changed
+
+- Module count 17 → 18 (9 actions + 8 searches + 1 composite action = 10 actions + 8 searches).
+
+### No breaking changes
+
+- Existing 17 module specs unmodified. Only `app/modules/shipmentSummary.json` is new.
+- App still PRIVATE (`audience: global`, `private: true` in `app/app.json` — unchanged). No Publish action triggered.
+- Connection (`apiKey`) unchanged.
+- `app/app.json` and `app/connection.json` unchanged.
+
+### Verified
+
+- `/users/me` 200 with the active EU2 token.
+- Pre-flight: 17 modules, no `shipmentSummary` collision.
+- Live `POST /api/shipment/summary` smoke (2-item composite payload) returned 200 with the documented response shape.
+- Module created via `@makehq/cli sdk-modules create` + 4× `set-section`. Post-create module list count = **18**, `shipmentSummary` present with `typeId: 4`, `archived: false`, `public: false`.
+- Section readback: all 4 sections (`api`, `expect`, `interface`, `samples`) round-tripped via Make's storage layer; IML interpolations preserved verbatim.
+- Make-runtime smoke (i.e. running the module inside a real Make scenario) is UI-only — Make's SDK Apps API does not expose a `/modules/{name}/test` or equivalent execute endpoint (probed: 404 across `test` / `invoke` / `execute` / `run` / `iml-test`). UI-runtime verification happens during the dogfood window using the private invite link on the Studio page.
+
+## [0.1.0] — 2026-04-24
+
+### Added
+
+- Initial release — 17 modules wrapping the FreightUtils REST API. 9 Action modules (CBM, LDM, chargeable weight, consignment, pallet fitting, unit conversion, ADR LQ/EQ check, ADR 1.1.3.6 exemption, UK duty) and 8 Search modules (ADR entry, HS code, Incoterm, airline, UN/LOCODE, ULD, container, vehicle).
+- App `freightutils` (auto-suffixed by Make to `freightutils-gb5f0g`), version 1, hosted on EU2 zone.
+- API-key connection with single `apiKey` parameter, validated via `GET /api/health`.
+- `scripts/push.mjs` first-run orchestrator using `@makehq/cli`.
+- Studio: <https://eu2.make.com/sdk/apps/freightutils-gb5f0g/1>.

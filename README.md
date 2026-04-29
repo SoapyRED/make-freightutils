@@ -1,14 +1,15 @@
 # make-freightutils
 
-Make.com custom app for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private v0.1.0** on the EU2 Make zone. Public App Directory listing via the Technology Partner programme is queued for v0.2.0+.
+Make.com custom app for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private v0.2.0** on the EU2 Make zone. Public App Directory listing via the Technology Partner programme is queued for v0.3.0+.
 
 ## What's in this release
 
-17 modules wrapping the FreightUtils REST API, matching the Zapier sibling's split:
+18 modules wrapping the FreightUtils REST API, matching the Zapier sibling's surface (v0.3.0):
 
-**Actions (9)**
+**Actions (10)**
 - Calculate CBM · LDM · Chargeable Weight · Consignment · Pallet Fitting · Convert Units
 - Check ADR LQ/EQ Eligibility · Calculate ADR 1.1.3.6 Exemption · Calculate UK Import Duty
+- **Calculate Shipment Summary** *(new in v0.2.0)* — composite covering CBM, chargeable weight, LDM, customs estimate, and DG flags for an entire shipment in one step
 
 **Searches (8)**
 - Find ADR Entry · HS Code · Incoterm · Airline · UN/LOCODE Location · ULD · Sea-Freight Container · Road-Freight Vehicle
@@ -68,8 +69,9 @@ Every response includes `X-RateLimit-Limit` / `X-RateLimit-Remaining` / `X-RateL
 
 ## Roadmap
 
-- **v0.2.0** — Technology Partner programme application for public App Directory listing
-- **v0.3.0** — Dynamic RPCs (e.g. live HS chapter dropdown, airline-prefix lookup by carrier name)
+- ~~**v0.2.0** — close 18-tool parity with `freightutils-mcp@2.0.0` / Zapier v0.3.0 by adding `shipmentSummary` composite~~ shipped
+- **v0.3.0** — Technology Partner programme application for public App Directory listing
+- **v0.4.0** — Dynamic RPCs (e.g. live HS chapter dropdown, airline-prefix lookup by carrier name)
 - Later — webhooks / triggers if/when FreightUtils emits events
 
 ## Repo layout
@@ -79,10 +81,11 @@ make-freightutils/
 ├── app/
 │   ├── app.json              # app meta + base section
 │   ├── connection.json       # apiKey connection: parameters + validation api
-│   └── modules/              # 17 modules — one JSON file each, all sections inline
+│   └── modules/              # 18 modules — one JSON file each, all sections inline
 │       ├── cbm.json
 │       ├── ldm.json
-│       └── … (17 total)
+│       ├── shipmentSummary.json   # new in v0.2.0
+│       └── … (18 total)
 ├── scripts/
 │   └── push.mjs              # one-shot orchestrator: create app + connection +
 │                             # modules, upload all sections via @makehq/cli
