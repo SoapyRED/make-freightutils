@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.1] — 2026-04-30
+
+### Fixed
+
+- **Per-module connection wiring across all 18 modules.** Previously the app-level connection type (`freightutils-gb5f0g`, label "FreightUtils API Key", validated via `GET /api/health`) was defined but **not attached per-module**, causing the Make scenario builder to skip the API-key prompt when a user added a FreightUtils module to a scenario, and Make's runtime to send requests with no `X-API-Key` header. Discovered during dogfood Day 1 (2026-04-29). All 18 modules now attached via `sdk-modules update --connection=freightutils-gb5f0g` (CLI calls `PATCH /api/v2/sdk/apps/freightutils-gb5f0g/1/modules/<name>` under the hood).
+- API readback post-fix confirms 18/18 modules report `connection: "freightutils-gb5f0g"` (was `null`).
+
+### Notes
+
+- No spec-file changes — `app/modules/*.json` files unchanged. The connection link is held in Make's app-state registry, not in the per-module JSON. The local spec files do carry `"connection": "apiKey"` at the top level (cosmetic / informational — `scripts/push.mjs` v0.1.0 ignored that key when calling `sdk-modules create`, which is why the wiring was missing in the first place).
+- App still PRIVATE (`audience: global`, `private: true` in `app/app.json` — unchanged). No Publish action triggered.
+- Follow-up: `scripts/push.mjs` should be updated to also call `sdk-modules update --connection=…` after creating each module, so future first-run pushes don't reproduce this gap. Out of scope for this patch.
+
 ## [0.2.0] — 2026-04-29
 
 ### Added
