@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.2] — 2026-04-30
+
+### Fixed
+
+- **`shipmentSummary`: normalise `compliance.*` output when the API omits the conditional `compliance` block.** Downstream Make scenarios can now reliably map `compliance.hasDangerousGoods` (and friends) even when no UN numbers were in the input. Pre-fix: a no-DG shipment produced a response with no `compliance` field at all, which made downstream `compliance.hasDangerousGoods` references in mapping panels throw "field not present in sample" errors during scenario builds.
+- IML normalisation applied at the response layer: `output` rewritten from `{{body}}` to `{{merge(body; {compliance: ifempty(body.compliance; {hasDangerousGoods: false, adrFlags: null})})}}`. Uses Make's standard `merge()` and `ifempty()` helpers — when the API response includes `compliance` it passes through unchanged; when it doesn't, the merge fills a stable default (`{hasDangerousGoods: false, adrFlags: null}`) so downstream typing stays valid.
+- The `interface` schema's `compliance.*` fields are already optional — Make's interface schema treats `required` as a per-field opt-in (default false), and these fields were never marked required. No schema change needed; the IML normalisation alone is sufficient. Belt-and-braces assertion: verified by inspection of `app/modules/shipmentSummary.json:interface[3]` — no `required: true` anywhere under the `compliance` collection.
+
+### Notes
+
+- Single section pushed to Make: `api`. The `interface` / `expect` / `samples` sections were left untouched — `set-section` was called for `api` only.
+- API readback confirms 560-byte stored payload matches local 560-byte spec character-for-character (including IML quoting of the `merge` / `ifempty` calls).
+- Sample stays as captured 2026-04-29 (a 2-item DG shipment with `compliance.hasDangerousGoods: true` populated). A no-DG sample re-capture would require running the module inside a real Make scenario via UI, which is outside the SDK API surface; this is dogfood-only verification for Soap to confirm in the next session.
+- App still PRIVATE (`audience: global`, `private: true` in `app/app.json` — unchanged). No Publish action triggered.
+- Other 17 modules untouched. `git diff 3365b1b..HEAD --name-only` shows only `app/modules/shipmentSummary.json`, `CHANGELOG.md`, and `package.json`.
+
 ## [0.2.1] — 2026-04-30
 
 ### Fixed

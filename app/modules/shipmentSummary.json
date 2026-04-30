@@ -16,7 +16,7 @@
       "freight_cost": "{{parameters.freight_cost}}",
       "insurance_cost": "{{parameters.insurance_cost}}"
     },
-    "response": { "output": "{{body}}" }
+    "response": { "output": "{{merge(body; {compliance: ifempty(body.compliance; {hasDangerousGoods: false, adrFlags: null})})}}" }
   },
   "expect": [
     {

@@ -1,6 +1,6 @@
 # make-freightutils
 
-Make.com custom app for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private v0.2.1** on the EU2 Make zone. Public App Directory listing via the Technology Partner programme is queued for v0.3.0+.
+Make.com custom app for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private v0.2.2** on the EU2 Make zone. Public App Directory listing via the Technology Partner programme is queued for v0.3.0+.
 
 ## What's in this release
 
