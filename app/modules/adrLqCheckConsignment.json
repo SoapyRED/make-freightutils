@@ -1,0 +1,95 @@
+{
+  "name": "adrLqCheckConsignment",
+  "label": "Check ADR LQ/EQ Eligibility (Multi-Item Consignment)",
+  "description": "Limited Quantity / Excepted Quantity eligibility for a multi-item ADR consignment in one call.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/adr/lq-check",
+    "method": "POST",
+    "body": {
+      "mode": "{{parameters.mode}}",
+      "items": "{{parameters.items}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "select",
+      "required": true,
+      "default": "lq",
+      "options": [
+        { "label": "Limited Quantity (LQ)", "value": "lq" },
+        { "label": "Excepted Quantity (EQ)", "value": "eq" }
+      ]
+    },
+    {
+      "name": "items",
+      "label": "Items",
+      "type": "array",
+      "required": true,
+      "spec": [
+        { "name": "un_number", "label": "UN Number", "type": "text", "required": true },
+        { "name": "quantity", "label": "Quantity", "type": "number", "required": true },
+        {
+          "name": "unit",
+          "label": "Unit",
+          "type": "select",
+          "required": true,
+          "default": "L",
+          "options": [
+            { "label": "Litres (L)", "value": "L" },
+            { "label": "Kilograms (kg)", "value": "kg" }
+          ]
+        }
+      ],
+      "help": "One entry per ADR substance. Quantity is per-inner-packaging amount."
+    }
+  ],
+  "interface": [
+    { "name": "overall_status", "label": "Overall Status", "type": "text" },
+    { "name": "mode", "label": "Mode (LQ or EQ)", "type": "text" },
+    {
+      "name": "items",
+      "label": "Per-Item Results",
+      "type": "array",
+      "spec": [
+        { "name": "un_number", "label": "UN Number", "type": "text" },
+        { "name": "substance", "label": "Substance", "type": "text" },
+        { "name": "packing_group", "label": "Packing Group", "type": "text" },
+        { "name": "lq_limit", "label": "LQ Limit", "type": "text" },
+        { "name": "eq_code", "label": "EQ Code", "type": "text" },
+        { "name": "status", "label": "Status", "type": "text" },
+        { "name": "reason", "label": "Reason", "type": "text" }
+      ]
+    },
+    {
+      "name": "summary",
+      "label": "Summary",
+      "type": "collection",
+      "spec": [
+        { "name": "total_items", "label": "Total Items", "type": "number" },
+        { "name": "qualifying", "label": "Qualifying Items", "type": "number" },
+        { "name": "failing", "label": "Failing Items", "type": "number" }
+      ]
+    }
+  ],
+  "samples": {
+    "mode": "lq",
+    "overall_status": "fails",
+    "items": [
+      {
+        "un_number": "1263",
+        "substance": "PAINT",
+        "packing_group": "I",
+        "lq_limit": "500 ml",
+        "eq_code": "E3",
+        "status": "exceeds_limit",
+        "reason": "125 L exceeds the LQ limit of 500 ml per inner packaging"
+      }
+    ],
+    "summary": { "total_items": 1, "qualifying": 0, "failing": 1 }
+  }
+}

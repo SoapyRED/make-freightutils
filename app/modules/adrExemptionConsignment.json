@@ -1,0 +1,67 @@
+{
+  "name": "adrExemptionConsignment",
+  "label": "Calculate ADR 1.1.3.6 Exemption (Multi-Item Consignment)",
+  "description": "Aggregated transport-category points across multiple ADR substances against the 1000-point threshold.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/adr-calculator",
+    "method": "POST",
+    "body": {
+      "items": "{{parameters.items}}"
+    },
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    {
+      "name": "items",
+      "label": "Items",
+      "type": "array",
+      "required": true,
+      "spec": [
+        { "name": "un_number", "label": "UN Number", "type": "text", "required": true },
+        { "name": "quantity", "label": "Quantity (kg or L)", "type": "number", "required": true }
+      ],
+      "help": "One entry per ADR substance in the consignment. Quantity is total kg or L for that substance across the whole vehicle."
+    }
+  ],
+  "interface": [
+    { "name": "total_points", "label": "Total Transport-Category Points", "type": "number" },
+    { "name": "threshold", "label": "Exemption Threshold", "type": "number" },
+    { "name": "exempt", "label": "Exempt Under 1.1.3.6", "type": "boolean" },
+    { "name": "has_category_zero", "label": "Has Transport Category 0 Substance", "type": "boolean" },
+    { "name": "has_quantity_exceedance", "label": "Per-Substance Quantity Exceeded", "type": "boolean" },
+    { "name": "message", "label": "Status Message", "type": "text" },
+    {
+      "name": "items",
+      "label": "Per-Item Breakdown",
+      "type": "array",
+      "spec": [
+        { "name": "un_number", "label": "UN Number", "type": "text" },
+        { "name": "transport_category", "label": "Transport Category", "type": "text" },
+        { "name": "quantity", "label": "Quantity", "type": "number" },
+        { "name": "multiplier", "label": "Multiplier", "type": "number" },
+        { "name": "points", "label": "Points", "type": "number" }
+      ]
+    },
+    {
+      "name": "warnings",
+      "label": "Warnings",
+      "type": "array",
+      "spec": { "type": "text" }
+    }
+  ],
+  "samples": {
+    "items": [
+      { "un_number": "1263", "transport_category": "1", "quantity": 125, "multiplier": 50, "points": 6250 },
+      { "un_number": "3082", "transport_category": "3", "quantity": 1000, "multiplier": 1, "points": 1000 }
+    ],
+    "total_points": 7250,
+    "threshold": 1000,
+    "exempt": false,
+    "has_category_zero": false,
+    "has_quantity_exceedance": true,
+    "warnings": ["UN1263 (Category 1): 125 exceeds the 20 kg/L maximum for Transport Category 1"],
+    "message": "Per-substance quantity limit exceeded — full ADR compliance required"
+  }
+}
