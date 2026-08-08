@@ -1,11 +1,12 @@
 {
   "name": "make-freightutils",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Make.com custom app for FreightUtils — free freight tools API (CBM, LDM, chargeable weight, ADR, HS, customs, reference data).",
   "private": true,
   "type": "module",
   "scripts": {
-    "push": "node scripts/push.mjs"
+    "push": "node scripts/push.mjs",
+    "update-base": "node scripts/update-base.mjs"
   },
   "license": "MIT",
   "author": {

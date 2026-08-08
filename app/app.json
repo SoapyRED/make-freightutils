@@ -6,11 +6,15 @@
   "language": "en",
   "private": true,
   "audience": "global",
-  "countries": ["gb", "eu"],
+  "countries": [
+    "gb",
+    "eu"
+  ],
   "base": {
     "baseUrl": "https://www.freightutils.com/api",
     "headers": {
       "X-API-Key": "{{connection.apiKey}}",
+      "User-Agent": "make-freightutils/__PKG_VERSION__",
       "Accept": "application/json"
     },
     "response": {
@@ -19,7 +23,9 @@
       }
     },
     "log": {
-      "sanitize": ["request.headers.X-API-Key"]
+      "sanitize": [
+        "request.headers.X-API-Key"
+      ]
     }
   }
 }

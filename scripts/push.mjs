@@ -19,6 +19,7 @@ import { execFile } from 'node:child_process';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pkgMeta, withVersion, assertNoPlaceholders } from './version.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..');
@@ -58,7 +59,12 @@ async function loadJson(p) { return JSON.parse(await readFile(p, 'utf8')); }
 
 async function main() {
 	console.log('→ Loading definitions');
-	const app = await loadJson(path.join(REPO, 'app', 'app.json'));
+	// Substitute __PKG_VERSION__ from package.json BEFORE anything is uploaded.
+	// See scripts/version.mjs for why the definition carries a placeholder.
+	const { version: PKG_VERSION } = await pkgMeta();
+	const app = withVersion(await loadJson(path.join(REPO, 'app', 'app.json')), PKG_VERSION);
+	assertNoPlaceholders(app, 'app.json');
+	console.log(`  User-Agent: ${app.base?.headers?.['User-Agent'] ?? '(none)'}`);
 	const conn = await loadJson(path.join(REPO, 'app', 'connection.json'));
 	const moduleFiles = (await readdir(path.join(REPO, 'app', 'modules'))).filter(f => f.endsWith('.json')).sort();
 	const modules = await Promise.all(moduleFiles.map(f => loadJson(path.join(REPO, 'app', 'modules', f))));

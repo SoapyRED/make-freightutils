@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.2.3 — 2026-08-08 (versioned User-Agent)
+
+### Added
+
+**Every call the app makes now sends `User-Agent: make-freightutils/<version>`,** set once in
+`base.headers` so all 20 modules inherit it. Until now this app sent no distinguishing User-Agent,
+so FreightUtils' own server metrics could not separate Make traffic from the Zapier app, the n8n
+node, or any other HTTP client — all of them landed in one undifferentiated bucket.
+
+**How the version stays honest.** Every other FreightUtils wrapper reads its version from
+`package.json` at runtime; a Make app is static JSON living on Make's servers, with no runtime of
+ours to read anything, and Make's `{{...}}` templating only reaches connection and parameter
+values. So `app/app.json` carries the token `__PKG_VERSION__`, substituted from `package.json` at
+push time (`scripts/version.mjs`). The literal never exists in a file anyone edits.
+
+The push path REFUSES to upload a definition still carrying the token. Without that check the
+failure would be silent and durable: Make would accept a literal
+`make-freightutils/__PKG_VERSION__`, every call would carry it, and the server would still bucket
+it as `make` because the prefix matches — it would look like it worked while the version was junk.
+
+### Added — `scripts/update-base.mjs`
+
+`scripts/push.mjs` is a first-run orchestrator: it CREATES the app, and Make auto-suffixes the name
+on collision, so running it against the live app produces a SECOND app rather than updating the
+first. The new script sets the base section on the existing app, which is all this change needs —
+`base.headers` is inherited by every module, so one section update covers the app with no module
+churn. Supports `--dry-run`, and refuses to guess when more than one app matches the name.
+
 ## [0.2.2] — 2026-04-30
 
 ### Fixed
