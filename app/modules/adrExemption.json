@@ -22,7 +22,11 @@
     { "name": "exempt", "label": "Exempt Under 1.1.3.6", "type": "boolean" },
     { "name": "transport_category", "label": "Transport Category", "type": "number" },
     { "name": "multiplier", "label": "Multiplier", "type": "number" },
-    { "name": "threshold", "label": "Threshold", "type": "number" }
+    { "name": "threshold", "label": "Threshold", "type": "number" },
+    { "name": "message", "label": "Verdict Message", "type": "text" },
+    { "name": "not_subject_to_adr", "label": "Not Subject To ADR (road)", "type": "boolean" },
+    { "name": "conditions_ref", "label": "Carriage Conditions Section (e.g. 5.5.3)", "type": "text" },
+    { "name": "carriage_prohibited", "label": "Carriage Prohibited (Table A)", "type": "boolean" }
   ],
   "samples": {
     "un_number": "1203",
