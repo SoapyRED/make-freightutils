@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.2.4 — 2026-08-19 (parity sprint: resolveReference + module-update tooling + submission package)
+
+### Added
+
+- **`resolveReference` module** — the identifier front door, backed by `GET /api/resolve`.
+  The endpoint is envelope-v1.1-native, so this is the first module that iterates an
+  envelope path (`body.result.candidates`) rather than mapping `{{body}}` flat; each
+  candidate becomes one bundle. Zero candidates = empty result, not an error.
+- **`scripts/update-module.mjs`** — updates (or creates) ONE module on the live app via
+  `sdk-modules set-section`. Closes the tooling gap where push.mjs could only create a
+  duplicate app and nothing could update an existing module's sections. Interface and
+  samples move together by default (the 0.2.2 shipmentSummary mapping-panel lesson).
+- **`app/modules/getSubscribeLink.json` back-filled** — the module existed on the platform
+  but not in the repo; a re-run of push.mjs would have silently dropped it.
+- **`docs/marketplace-submission.md`** — the App Directory submission package: gap
+  checklist (icon, keywords, docs page, dogfood gate), draft docs-page copy, and the
+  submission-day sequence. Submission itself is manual and gated.
+
+### Changed
+
+- `adrExemption` samples now carry the four scope-verdict fields the 0.2.3-era interface
+  update added (`message`, `not_subject_to_adr`, `conditions_ref`, `carriage_prohibited`)
+  — interface and samples move together or the mapping panel errors.
+- README/push.mjs module counts corrected (22 modules).
+
+### Platform state (for the applier)
+
+The live app still lags this repo: adrExemption interface+samples and the new
+resolveReference module need `update-module.mjs` (requires `MAKE_API_KEY` — Soap) or
+Studio paste; the 0.2.3 base UA push is still pending on the same key.
+
 ## 0.2.3 — 2026-08-08 (versioned User-Agent)
 
 ### Added

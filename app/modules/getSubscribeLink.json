@@ -1,0 +1,32 @@
+{
+  "name": "getSubscribeLink",
+  "label": "Get Subscribe Link",
+  "description": "Return the FreightUtils Pro upgrade URL and tier metadata. Hand the URL to the user — never attempt checkout in a scenario.",
+  "typeId": 4,
+  "connection": "apiKey",
+  "api": {
+    "url": "/tools",
+    "method": "GET",
+    "qs": {},
+    "response": { "output": "{{body}}" }
+  },
+  "expect": [
+    { "name": "tier", "label": "Tier", "type": "text", "required": false, "default": "pro", "help": "Only \"pro\" is supported today." }
+  ],
+  "interface": [
+    { "name": "url", "label": "Subscribe URL", "type": "text" },
+    { "name": "tier", "label": "Tier", "type": "text" },
+    { "name": "monthly_limit", "label": "Monthly Request Limit", "type": "number" },
+    { "name": "monthly_price", "label": "Monthly Price", "type": "text" },
+    { "name": "currency", "label": "Currency", "type": "text" },
+    { "name": "note", "label": "Note", "type": "text" }
+  ],
+  "samples": {
+    "url": "https://www.freightutils.com/pricing",
+    "tier": "pro",
+    "monthly_limit": 50000,
+    "monthly_price": "£19",
+    "currency": "GBP",
+    "note": "Open the URL in a browser to subscribe."
+  }
+}

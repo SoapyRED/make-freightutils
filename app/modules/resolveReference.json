@@ -1,0 +1,46 @@
+{
+  "name": "resolveReference",
+  "label": "Resolve Freight Identifier",
+  "description": "Hand it any freight identifier — UN number, AWB prefix, IATA/ICAO, UN/LOCODE, container number, HS code, Incoterm, tunnel code, ULD serial, ISO type — and get typed, ranked, cited candidates. Ambiguity returns multiple candidates, never a guess.",
+  "typeId": 9,
+  "connection": "apiKey",
+  "api": {
+    "url": "/resolve",
+    "method": "GET",
+    "qs": { "q": "{{parameters.q}}" },
+    "response": {
+      "iterate": "{{body.result.candidates}}",
+      "output": "{{item}}"
+    }
+  },
+  "expect": [
+    { "name": "q", "label": "Identifier", "type": "text", "required": true, "default": "UN1845", "help": "One identifier, max 32 characters — e.g. 176, UN1845, NLRTM, FOB, MSKU1100810. Not free text. Zero candidates returns an empty result, not an error. NOTE: /api/resolve is envelope-native; this module iterates body.result.candidates." }
+  ],
+  "interface": [
+    { "name": "entity_type", "label": "Entity Type", "type": "text" },
+    { "name": "identifier_type", "label": "Identifier Type (which grammar matched)", "type": "text" },
+    { "name": "value_normalized", "label": "Normalized Value", "type": "text" },
+    { "name": "summary", "label": "Summary", "type": "text" },
+    { "name": "verification_status", "label": "Verification Status", "type": "text" },
+    { "name": "verification_basis", "label": "Verification Basis (record or dataset)", "type": "text" },
+    { "name": "rank_basis", "label": "Rank Basis", "type": "text" },
+    { "name": "canonical_url", "label": "Canonical Page URL", "type": "text" },
+    { "name": "api_url", "label": "API URL", "type": "text" },
+    { "name": "citation", "label": "Citation", "type": "collection", "spec": [
+      { "name": "text", "label": "Text", "type": "text" },
+      { "name": "qualifier", "label": "Qualifier", "type": "text" }
+    ] }
+  ],
+  "samples": {
+    "entity_type": "dangerous_good",
+    "identifier_type": "un_number",
+    "value_normalized": "1845",
+    "summary": "UN 1845 Carbon dioxide, solid (Dry ice) — Class 9 — not subject to ADR (road)",
+    "verification_status": "verified",
+    "verification_basis": "record",
+    "rank_basis": "dataset record hit · verification verified (record-level) · static prior adr #2 of 10 · tiebreak un_number/1845",
+    "canonical_url": "/adr/un/1845",
+    "api_url": "/api/adr?un=1845",
+    "citation": { "text": "UN 1845 Carbon dioxide, solid (Dry ice) — Class 9 — not subject to ADR (road), section 5.5.3 conditions apply, UNECE ADR 2025." }
+  }
+}

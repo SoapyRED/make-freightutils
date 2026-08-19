@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Push the FreightUtils Make app + connection + 17 modules.
+ * Push the FreightUtils Make app + connection + 22 modules.
  *
  * Reads the JSON definitions under ../app/ and uploads them via the
  * locally-installed @makehq/cli. CLI is invoked via Node's execFile

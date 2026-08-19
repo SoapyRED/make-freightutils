@@ -35,6 +35,10 @@
     "multiplier": 3,
     "total_points": 600,
     "exempt": true,
-    "threshold": 1000
+    "threshold": 1000,
+    "message": "1.1.3.6 exemption applies",
+    "not_subject_to_adr": false,
+    "conditions_ref": null,
+    "carriage_prohibited": false
   }
 }

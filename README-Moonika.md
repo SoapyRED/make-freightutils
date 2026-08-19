@@ -1,12 +1,12 @@
 # make-freightutils
 
-Make.com custom app for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private v0.2.4** on the EU2 Make zone. Public App Directory listing via the Technology Partner programme is queued for v0.3.0+.
+Make.com custom app for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private v0.2.2** on the EU2 Make zone. Public App Directory listing via the Technology Partner programme is queued for v0.3.0+.
 
 ## What's in this release
 
-22 modules wrapping the FreightUtils REST API, matching the Zapier sibling's surface (v0.3.0):
+18 modules wrapping the FreightUtils REST API, matching the Zapier sibling's surface (v0.3.0):
 
-**Actions (13)**
+**Actions (10)**
 - Calculate CBM · LDM · Chargeable Weight · Consignment · Pallet Fitting · Convert Units
 - Check ADR LQ/EQ Eligibility · Calculate ADR 1.1.3.6 Exemption · Calculate UK Import Duty
 - **Calculate Shipment Summary** *(new in v0.2.0)* — composite covering CBM, chargeable weight, LDM, customs estimate, and DG flags for an entire shipment in one step
@@ -81,7 +81,7 @@ make-freightutils/
 ├── app/
 │   ├── app.json              # app meta + base section
 │   ├── connection.json       # apiKey connection: parameters + validation api
-│   └── modules/              # 22 modules — one JSON file each, all sections inline
+│   └── modules/              # 18 modules — one JSON file each, all sections inline
 │       ├── cbm.json
 │       ├── ldm.json
 │       ├── shipmentSummary.json   # new in v0.2.0
