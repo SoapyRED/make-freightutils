@@ -114,6 +114,33 @@ if (CREATE) {
     '--module-init-mode=blank',
   ]);
   console.log(`  ✓ module created (${mod.typeId === 4 ? 'action' : mod.typeId === 9 ? 'search' : `type-${mod.typeId}`})`);
+
+  // Attach the app connection. `sdk-modules create` does NOT set one, and a module
+  // without a connection renders no Connection field in the scenario editor — its
+  // calls go out with an empty {{connection.apiKey}}, i.e. anonymous and capped
+  // (found on resolveReference, 2026-08-21: parameters [] vs __IMTCONN__ on every
+  // older module). The repo JSON's `connection` field holds the repo-local name
+  // ("apiKey"); the PLATFORM resource has its own generated name, so resolve it
+  // from the app's connection list rather than trusting either name.
+  if (mod.connection) {
+    const zone = process.env.MAKE_ZONE;
+    const auth = { Authorization: `Token ${process.env.MAKE_API_KEY}`, 'Content-Type': 'application/json' };
+    const connsRes = await fetch(`https://${zone}/api/v2/sdk/apps/${appName}/connections`, { headers: auth });
+    const conns = (await connsRes.json()).appConnections || [];
+    if (conns.length === 0) {
+      console.error(`  ✗ app has no SDK connection to attach — create one in Studio, then re-run with --sections= (empty) to attach`);
+      process.exit(1);
+    }
+    const conn = conns.length === 1 ? conns[0] : conns.find((c) => c.name === mod.connection) || conns[0];
+    const patch = await fetch(`https://${zone}/api/v2/sdk/apps/${appName}/${appVersion}/modules/${mod.name}`, {
+      method: 'PATCH', headers: auth, body: JSON.stringify({ connection: conn.name }),
+    });
+    if (!patch.ok) {
+      console.error(`  ✗ could not attach connection "${conn.name}" (HTTP ${patch.status}) — attach in Studio before use`);
+      process.exit(1);
+    }
+    console.log(`  ✓ connection attached (${conn.name})`);
+  }
 }
 
 for (const section of SECTIONS) {
