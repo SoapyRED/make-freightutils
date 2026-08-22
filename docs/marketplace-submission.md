@@ -7,10 +7,21 @@ since v0.3.0 roadmap note).
 
 ## Hard gates before submission
 
+0. **Connection creation works — VERIFIED 2026-08-22, and keep it that way.** Creating a
+   connection is the FIRST thing a marketplace reviewer does, and until 2026-08-22 it
+   failed 100% of the time with "Invalid URL": the connection validation used a relative
+   url (`/health`) and Make connections do not inherit `base.baseUrl` (modules do). Fixed
+   to the absolute house-standard auth test `https://www.freightutils.com/api/auth/whoami`
+   (Zapier + n8n use the same; `/health` would fake-green any key). Proven both ways via
+   the API: valid key → `verified: true`, bogus key → 401 with the friendly message.
+   RULE: any future connection edit must keep the url ABSOLUTE and must re-run the
+   two-connection API test (create+verify, bogus-fail, delete both).
+
+
 1. **Dogfood run (live-engine-test rule).** One real scenario against the private app via
    the invite link — module output visible end-to-end, mapping panel clean. UI-only; no
    SDK test endpoint exists (CHANGELOG 0.2.2 probe: 404 across test/invoke/execute/run).
-2. **Platform in sync with this repo.** As of 2026-08-19 the platform lags the repo:
+2. **Platform in sync with this repo.** ✅ since 2026-08-21 (apply ran; connection fix 2026-08-22). Original gap for the record:
    adrExemption is missing the four scope-verdict interface fields + samples;
    resolveReference does not exist on the platform yet. Apply with
    `scripts/update-module.mjs` once `MAKE_API_KEY` exists (Soap generates it in

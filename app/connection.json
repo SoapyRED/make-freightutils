@@ -12,20 +12,27 @@
     }
   ],
   "api": {
-    "url": "/health",
+    "url": "https://www.freightutils.com/api/auth/whoami",
     "method": "GET",
     "headers": {
       "X-API-Key": "{{parameters.apiKey}}",
       "Accept": "application/json"
     },
     "response": {
-      "uid": "{{substring(parameters.apiKey; 0; 8)}}",
+      "uid": "{{body.key_prefix}}",
+      "metadata": {
+        "type": "text",
+        "value": "{{body.tier}}"
+      },
       "error": {
         "message": "[{{statusCode}}] Invalid API key. Check the value or generate a new one at https://www.freightutils.com/api-docs."
       }
     },
     "log": {
-      "sanitize": ["request.headers.X-API-Key"]
+      "sanitize": [
+        "request.headers.X-API-Key"
+      ]
     }
-  }
+  },
+  "_comment_api": "Connection validation MUST use an ABSOLUTE url: Make connections do not inherit base.baseUrl (that applies to modules only) — the original relative '/health' made every connection attempt fail with 'Invalid URL' before the request even left Make (found by the first live dogfood, 2026-08-22). /api/auth/whoami is the house-standard auth test (Zapier + n8n use it too): 200 {authenticated, tier, key_prefix} on a valid key, 401 on a bad one — /api/health would fake-green any key. uid=key_prefix is server-derived and non-PII."
 }

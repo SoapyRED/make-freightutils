@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.5 — 2026-08-22
+
+### Fixed
+
+- **Connection creation failed with "Invalid URL" — every attempt, any key.** The
+  connection's validation call used a RELATIVE url (`/health`), assuming it would inherit
+  `base.baseUrl`; Make connections do not inherit the base (modules do), so the request
+  could not be built at all. Found by the first live dogfood connection attempt. Now an
+  ABSOLUTE url — and pointed at `https://www.freightutils.com/api/auth/whoami`, the same
+  auth test Zapier and n8n use: 200 + `{authenticated, tier, key_prefix}` on a valid key,
+  401 on a bad one. `/health` would have fake-greened any key once the URL was fixed, since
+  it answers 200 unauthenticated. `uid` now comes from the server-derived `key_prefix`.
+  Verified end-to-end via the API: real connection created → `verified: true` (debug trace
+  shows the whoami call), bogus-key connection → 401 with the friendly message; both test
+  connections deleted.
+
 ## 0.2.4 — 2026-08-19 (parity sprint: resolveReference + module-update tooling + submission package)
 
 ### Added
