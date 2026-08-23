@@ -41,8 +41,8 @@ Make does not expose invite URL generation through the SDK API at this time, so 
 ## Credentials
 
 1. Generate a free FreightUtils API key (100 req/day) at <https://www.freightutils.com/api-docs>. Pro tier (50,000 req/month, £19) via <https://www.freightutils.com/pricing>.
-2. In Make: **Scenarios → Add → FreightUtils → any module → Add connection → FreightUtils API Key**. Paste the key.
-3. Make validates the key by hitting `/api/health` with `X-API-Key` — green tick means auth works end to end.
+2. In Make: **Scenarios → Add → FreightUtils → any module → Add connection → FreightUtils API Key**. Paste the key. (There is no standalone connection screen — Make asks you to create the connection the first time you add a FreightUtils module; the Connection field appears after you pick the module.)
+3. Make validates the key by hitting `/api/auth/whoami` with `X-API-Key` — green tick means auth works end to end; a bad key fails on save with a link to generate a new one.
 
 ## Worked scenario A — Airtable row → chargeable weight → Airtable
 

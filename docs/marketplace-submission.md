@@ -56,9 +56,11 @@ since v0.3.0 roadmap note).
 > identifier resolver. Every response cites its source: authority, edition, licence where
 > held, and a verification status.
 >
-> **Connection:** create a free API key at https://www.freightutils.com (100 requests/day;
-> Pro 50,000/month). Paste it into the FreightUtils connection — validated against
-> /health on save.
+> **Connection:** there is no standalone "create connection" screen — you'll be asked to
+> create the connection when you add your first FreightUtils module to a scenario. Create
+> a free API key at https://www.freightutils.com (100 requests/day; Pro 50,000/month) and
+> paste it in; Make validates it against the account endpoint (/api/auth/whoami) on save —
+> a bad key fails immediately with a link to generate a new one.
 >
 > **Modules:** 13 actions (calculators + checks) and 9 searches (reference lookups).
 > Search modules output one bundle per matching record. "Resolve Freight Identifier"
