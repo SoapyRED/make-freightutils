@@ -21,8 +21,8 @@
     { "name": "proper_shipping_name", "label": "Proper Shipping Name", "type": "text" },
     { "name": "class", "label": "Class", "type": "text" },
     { "name": "packing_group", "label": "Packing Group", "type": "text" },
-    { "name": "transport_category", "label": "Transport Category", "type": "number" },
-    { "name": "tunnel_code", "label": "Tunnel Code", "type": "text" },
+    { "name": "transport_category", "label": "Transport Category", "type": "text" },
+    { "name": "tunnel_restriction_code", "label": "Tunnel Restriction Code", "type": "text" },
     { "name": "packing_instructions", "label": "Packing Instructions (Table A col 8)", "type": "text" },
     { "name": "special_packing_provisions", "label": "Special Packing Provisions (col 9a)", "type": "text" },
     { "name": "mixed_packing_provisions", "label": "Mixed Packing Provisions (col 9b)", "type": "text" },
@@ -41,7 +41,7 @@
     "proper_shipping_name": "MOTOR SPIRIT or GASOLINE or PETROL",
     "class": "3",
     "packing_group": "II",
-    "transport_category": 2,
-    "tunnel_code": "D/E"
+    "transport_category": "2",
+    "tunnel_restriction_code": "(D/E)"
   }
 }
