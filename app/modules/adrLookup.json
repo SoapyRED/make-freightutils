@@ -22,7 +22,19 @@
     { "name": "class", "label": "Class", "type": "text" },
     { "name": "packing_group", "label": "Packing Group", "type": "text" },
     { "name": "transport_category", "label": "Transport Category", "type": "number" },
-    { "name": "tunnel_code", "label": "Tunnel Code", "type": "text" }
+    { "name": "tunnel_code", "label": "Tunnel Code", "type": "text" },
+    { "name": "packing_instructions", "label": "Packing Instructions (Table A col 8)", "type": "text" },
+    { "name": "special_packing_provisions", "label": "Special Packing Provisions (col 9a)", "type": "text" },
+    { "name": "mixed_packing_provisions", "label": "Mixed Packing Provisions (col 9b)", "type": "text" },
+    { "name": "portable_tank_instructions", "label": "Portable Tank Instructions (col 10)", "type": "text" },
+    { "name": "portable_tank_special_provisions", "label": "Portable Tank Special Provisions (col 11)", "type": "text" },
+    { "name": "tank_code", "label": "ADR Tank Code (col 12)", "type": "text" },
+    { "name": "tank_special_provisions", "label": "ADR Tank Special Provisions (col 13)", "type": "text" },
+    { "name": "vehicle_for_tank_carriage", "label": "Vehicle for Tank Carriage (col 14)", "type": "text" },
+    { "name": "carriage_packages", "label": "Carriage Special Provisions: Packages (col 16)", "type": "text" },
+    { "name": "carriage_bulk", "label": "Carriage Special Provisions: Bulk (col 17)", "type": "text" },
+    { "name": "carriage_loading_unloading_handling", "label": "Carriage Special Provisions: Loading, Unloading and Handling (col 18)", "type": "text" },
+    { "name": "carriage_operation", "label": "Carriage Special Provisions: Operation (col 19)", "type": "text" }
   ],
   "samples": {
     "un_number": "1203",
