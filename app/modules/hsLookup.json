@@ -21,9 +21,13 @@
     { "name": "description", "label": "Description", "type": "text" },
     { "name": "section", "label": "Section", "type": "text" },
     { "name": "chapter", "label": "Chapter", "type": "text" },
-    { "name": "heading", "label": "Heading", "type": "text" }
+    { "name": "heading", "label": "Heading", "type": "text" },
+    { "name": "fu_id", "label": "FreightUtils ID (stable across editions)", "type": "text" },
+    { "name": "fu_version_id", "label": "FreightUtils Version ID (this edition)", "type": "text" }
   ],
   "samples": {
+    "fu_id": "fu:hs:090111",
+    "fu_version_id": "fu:hs:090111@2022",
     "commodity_code": "0901110000",
     "description": "Coffee, not roasted, not decaffeinated",
     "section": "IV",

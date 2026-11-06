@@ -22,9 +22,11 @@
     { "name": "icao", "label": "ICAO Code", "type": "text" },
     { "name": "awb_prefix", "label": "AWB Prefix", "type": "text" },
     { "name": "country", "label": "Country", "type": "text" },
-    { "name": "cargo", "label": "Cargo Carrier", "type": "boolean" }
+    { "name": "cargo", "label": "Cargo Carrier", "type": "boolean" },
+    { "name": "fu_id", "label": "FreightUtils ID (stable across editions)", "type": "text" }
   ],
   "samples": {
+    "fu_id": "fu:airline:emirates",
     "airline_name": "Emirates SkyCargo",
     "iata": "EK",
     "icao": "UAE",
