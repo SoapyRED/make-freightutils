@@ -40,9 +40,13 @@
     { "name": "name", "label": "Name", "type": "text" },
     { "name": "mode", "label": "Transport Mode", "type": "text" },
     { "name": "risk_transfer", "label": "Risk Transfer", "type": "text" },
-    { "name": "cost_transfer", "label": "Cost Transfer", "type": "text" }
+    { "name": "cost_transfer", "label": "Cost Transfer", "type": "text" },
+    { "name": "fu_id", "label": "FreightUtils ID (stable across editions)", "type": "text" },
+    { "name": "fu_version_id", "label": "FreightUtils Version ID (this edition)", "type": "text" }
   ],
   "samples": {
+    "fu_id": "fu:incoterm:FOB",
+    "fu_version_id": "fu:incoterm:FOB@2020",
     "code": "FOB",
     "name": "Free on Board",
     "mode": "sea",

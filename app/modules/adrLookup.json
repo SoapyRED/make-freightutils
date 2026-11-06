@@ -34,9 +34,13 @@
     { "name": "carriage_packages", "label": "Carriage Special Provisions: Packages (col 16)", "type": "text" },
     { "name": "carriage_bulk", "label": "Carriage Special Provisions: Bulk (col 17)", "type": "text" },
     { "name": "carriage_loading_unloading_handling", "label": "Carriage Special Provisions: Loading, Unloading and Handling (col 18)", "type": "text" },
-    { "name": "carriage_operation", "label": "Carriage Special Provisions: Operation (col 19)", "type": "text" }
+    { "name": "carriage_operation", "label": "Carriage Special Provisions: Operation (col 19)", "type": "text" },
+    { "name": "fu_id", "label": "FreightUtils ID (stable across editions)", "type": "text" },
+    { "name": "fu_version_id", "label": "FreightUtils Version ID (this edition)", "type": "text" }
   ],
   "samples": {
+    "fu_id": "fu:adr:un:1203:II:F1",
+    "fu_version_id": "fu:adr:un:1203:II:F1@2025",
     "un_number": "1203",
     "proper_shipping_name": "MOTOR SPIRIT or GASOLINE or PETROL",
     "class": "3",

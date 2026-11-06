@@ -54,14 +54,16 @@
       "spec": [
         { "name": "un_number", "label": "UN Number", "type": "text" },
         { "name": "status", "label": "Status", "type": "text" },
-        { "name": "lq_limit", "label": "LQ/EQ Limit", "type": "number" }
+        { "name": "lq_limit", "label": "LQ/EQ Limit", "type": "number" },
+        { "name": "fu_id", "label": "Item FreightUtils ID (stable across editions)", "type": "text" },
+        { "name": "fu_version_id", "label": "Item FreightUtils Version ID (this edition)", "type": "text" }
       ]
     }
   ],
   "samples": {
     "overall_status": "qualifies",
     "items": [
-      { "un_number": "1203", "quantity": 0.5, "unit": "L", "status": "qualifies", "lq_limit": 1 }
+      { "fu_id": "fu:adr:un:1203:II:F1", "fu_version_id": "fu:adr:un:1203:II:F1@2025", "un_number": "1203", "quantity": 0.5, "unit": "L", "status": "qualifies", "lq_limit": 1 }
     ]
   }
 }

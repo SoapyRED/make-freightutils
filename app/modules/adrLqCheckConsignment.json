@@ -72,7 +72,9 @@
       "spec": [
         { "name": "total_items", "label": "Total Items", "type": "number" },
         { "name": "qualifying", "label": "Qualifying Items", "type": "number" },
-        { "name": "failing", "label": "Failing Items", "type": "number" }
+        { "name": "failing", "label": "Failing Items", "type": "number" },
+        { "name": "fu_id", "label": "Item FreightUtils ID (stable across editions)", "type": "text" },
+        { "name": "fu_version_id", "label": "Item FreightUtils Version ID (this edition)", "type": "text" }
       ]
     }
   ],
@@ -81,6 +83,8 @@
     "overall_status": "fails",
     "items": [
       {
+        "fu_id": "fu:adr:un:1263:I:F1",
+        "fu_version_id": "fu:adr:un:1263:I:F1@2025",
         "un_number": "1263",
         "substance": "PAINT",
         "packing_group": "I",

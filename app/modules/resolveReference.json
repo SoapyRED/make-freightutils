@@ -29,7 +29,8 @@
     { "name": "citation", "label": "Citation", "type": "collection", "spec": [
       { "name": "text", "label": "Text", "type": "text" },
       { "name": "qualifier", "label": "Qualifier", "type": "text" }
-    ] }
+    ] },
+    { "name": "record", "label": "Record", "type": "collection", "spec": [{ "name": "fu_id", "label": "Record FreightUtils ID (stable across editions)", "type": "text" }, { "name": "fu_version_id", "label": "Record FreightUtils Version ID (this edition)", "type": "text" }] }
   ],
   "samples": {
     "entity_type": "dangerous_good",
@@ -41,6 +42,7 @@
     "rank_basis": "dataset record hit · verification verified (record-level) · static prior adr #2 of 10 · tiebreak un_number/1845",
     "canonical_url": "/adr/un/1845",
     "api_url": "/api/adr?un=1845",
-    "citation": { "text": "UN 1845 Carbon dioxide, solid (Dry ice) — Class 9 — not subject to ADR (road), section 5.5.3 conditions apply, UNECE ADR 2025." }
+    "citation": { "text": "UN 1845 Carbon dioxide, solid (Dry ice) — Class 9 — not subject to ADR (road), section 5.5.3 conditions apply, UNECE ADR 2025." },
+    "record": { "fu_id": "fu:adr:un:1845:none:M11", "fu_version_id": "fu:adr:un:1845:none:M11@2025" }
   }
 }

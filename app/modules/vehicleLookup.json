@@ -34,9 +34,11 @@
     { "name": "category", "label": "Category", "type": "text" },
     { "name": "length_m", "label": "Length (m)", "type": "number" },
     { "name": "max_payload_kg", "label": "Max Payload (kg)", "type": "number" },
-    { "name": "pallet_capacity_euro", "label": "Euro Pallet Capacity", "type": "number" }
+    { "name": "pallet_capacity_euro", "label": "Euro Pallet Capacity", "type": "number" },
+    { "name": "fu_id", "label": "FreightUtils ID (stable across editions)", "type": "text" }
   ],
   "samples": {
+    "fu_id": "fu:vehicle:standard-curtainsider",
     "slug": "standard-curtainsider",
     "name": "Standard Curtainsider",
     "category": "articulated",

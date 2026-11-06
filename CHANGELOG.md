@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.6 — 2026-11-06
+
+### Added
+
+- The eleven modules whose answers carry records declare the stable identifiers the API has put on every record since
+  6 November 2026 in their `interface` and `samples`: `fu_id` (the same across editions) and, where the dataset has
+  editions, `fu_version_id` (`fu_id@<edition>`) — on the record for ADR, airline, container, HS, Incoterms, ULD,
+  UN/LOCODE and vehicle lookups, on each item of both LQ / EQ checks, and in a `record` collection on Resolve Reference.
+  Airlines, ULDs, containers and vehicles have no editions, so they declare `fu_id` only. Sample values were recorded
+  from production for the record each sample shows. Output-side only: the values were already in the bundle; now
+  the mapper offers them before a run. Requests and parameters are unchanged.
+
 ## 0.2.5 — 2026-08-22
 
 ### Fixed

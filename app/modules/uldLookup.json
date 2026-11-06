@@ -20,9 +20,11 @@
     { "name": "code", "label": "Code", "type": "text" },
     { "name": "name", "label": "Name", "type": "text" },
     { "name": "internal_volume_m3", "label": "Internal Volume (m³)", "type": "number" },
-    { "name": "max_gross_kg", "label": "Max Gross Weight (kg)", "type": "number" }
+    { "name": "max_gross_kg", "label": "Max Gross Weight (kg)", "type": "number" },
+    { "name": "fu_id", "label": "FreightUtils ID (stable across editions)", "type": "text" }
   ],
   "samples": {
+    "fu_id": "fu:uld:ake-ld3",
     "code": "AKE",
     "name": "LD3",
     "internal_volume_m3": 4.3,

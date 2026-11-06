@@ -21,9 +21,11 @@
     { "name": "name", "label": "Name", "type": "text" },
     { "name": "internalVolumeM3", "label": "Internal Volume (m³)", "type": "number" },
     { "name": "maxGrossKg", "label": "Max Gross Weight (kg)", "type": "number" },
-    { "name": "tareWeightKg", "label": "Tare Weight (kg)", "type": "number" }
+    { "name": "tareWeightKg", "label": "Tare Weight (kg)", "type": "number" },
+    { "name": "fu_id", "label": "FreightUtils ID (stable across editions)", "type": "text" }
   ],
   "samples": {
+    "fu_id": "fu:container:40ft-high-cube",
     "slug": "40ft-high-cube",
     "name": "40ft High Cube Container",
     "internalLengthCm": 1203,
